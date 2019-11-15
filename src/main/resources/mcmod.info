@@ -1,0 +1,16 @@
+[
+{
+  "modid": "witcherymodifier",
+  "name": "Witchery Modifier",
+  "description": "A small mod to access witchery and modify its recipes.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["bartimaeusnek"],
+  "credits": "enimorph for creating witchery.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
