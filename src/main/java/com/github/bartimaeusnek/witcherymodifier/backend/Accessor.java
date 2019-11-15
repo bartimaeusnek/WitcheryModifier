@@ -1,11 +1,17 @@
 package com.github.bartimaeusnek.witcherymodifier.backend;
 
+import com.emoniph.witchery.brewing.WitcheryBrewRegistry;
+import com.emoniph.witchery.brewing.action.BrewAction;
+import com.emoniph.witchery.brewing.action.BrewActionRitualRecipe;
 import com.emoniph.witchery.crafting.BrazierRecipes;
+import com.emoniph.witchery.crafting.DistilleryRecipes;
 import com.emoniph.witchery.crafting.KettleRecipes;
 import com.emoniph.witchery.crafting.SpinningRecipes;
 import com.emoniph.witchery.ritual.*;
 import net.minecraft.item.ItemStack;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -124,6 +130,50 @@ public class Accessor {
 
         public static boolean removeBrazierRecipe(BrazierRecipes.BrazierRecipe recipe){
             return getAllBrazierRecipes().remove(recipe);
+        }
+
+    }
+
+    public static class CauldronAccessor{
+        
+        public static List<BrewActionRitualRecipe> getAllCauldronRecipes(){
+            return WitcheryBrewRegistry.INSTANCE.getRecipes();
+        }
+
+        public static List<BrewActionRitualRecipe> getCauldronRecipesByOutput(ItemStack stack){
+            return getAllCauldronRecipes().stream().filter(s -> compareStacks(stack,s.ITEM_KEY.toStack(),true)).collect(Collectors.toList());
+        }
+
+        public static boolean removeCauldronRecipe(BrewActionRitualRecipe recipe){
+            return getAllCauldronRecipes().remove(recipe);
+        }
+
+        public static boolean addCauldronRecipe(BrewActionRitualRecipe recipe){
+            return getAllCauldronRecipes().add(recipe);
+        }
+
+    }
+
+    public static class DistilleryAccessor{
+
+        public static List<DistilleryRecipes.DistilleryRecipe> getAllDistilleryRecipes(){
+            return DistilleryRecipes.instance().recipes;
+        }
+
+        public static List<DistilleryRecipes.DistilleryRecipe> getDistilleryRecipesByFirstOutput(ItemStack stack){
+            return getAllDistilleryRecipes().stream().filter(s -> compareStacks(stack,s.outputs[0],true)).collect(Collectors.toList());
+        }
+
+        public static boolean removeDistilleryRecipe(DistilleryRecipes.DistilleryRecipe recipe){
+            return getAllDistilleryRecipes().remove(recipe);
+        }
+
+        public static boolean addDistilleryRecipe(DistilleryRecipes.DistilleryRecipe recipe){
+            return getAllDistilleryRecipes().add(recipe);
+        }
+
+        public static void addDistilleryRecipe(ItemStack input1, ItemStack input2, int jars, ItemStack output1, ItemStack output2, ItemStack output3, ItemStack output4){
+            DistilleryRecipes.instance().addRecipe(input1, input2, jars, output1, output2, output3, output4);
         }
 
     }
